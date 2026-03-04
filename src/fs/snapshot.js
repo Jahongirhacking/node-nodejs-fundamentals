@@ -3,6 +3,7 @@ import path from "node:path";
 import process from "node:process";
 
 const snapshot = async () => {
+  const restoredFolderName = "workspace_restored";
   const root = process.cwd();
   const files = await fs.readdir(process.cwd(), {
     recursive: true,
@@ -38,7 +39,7 @@ const snapshot = async () => {
     JSON.stringify(
       {
         rootPath: root,
-        entries,
+        entries: entries?.filter((e) => !e?.path?.includes(restoredFolderName)),
       },
       null,
       2,
