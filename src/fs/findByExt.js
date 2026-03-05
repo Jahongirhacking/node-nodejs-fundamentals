@@ -8,11 +8,11 @@ const findByExt = async () => {
   try {
     stat = await fs.stat(workspace);
   } catch {
-    throw new Error("FS operation failed");
+    throw new Error("FS operation failed - workspace folder not found");
   }
 
   if (!stat.isDirectory()) {
-    throw new Error("FS operation failed");
+    throw new Error("FS operation failed - error reading workspace folder");
   }
 
   const args = process.argv.slice(2);

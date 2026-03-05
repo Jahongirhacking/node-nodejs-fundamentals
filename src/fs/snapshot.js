@@ -6,10 +6,10 @@ const snapshot = async () => {
   const workspace = path.join(process.cwd(), "workspace");
   try {
     if (!(await fs.stat(workspace)).isDirectory()) {
-      throw new Error(`FS operation failed`);
+      throw new Error(`FS operation failed - workspace folder not found`);
     }
   } catch {
-    throw new Error(`FS operation failed`);
+    throw new Error(`FS operation failed - workspace folder not found`);
   }
   const files = await fs.readdir(workspace, {
     recursive: true,
@@ -25,7 +25,7 @@ const snapshot = async () => {
           fileContent = await fs.readFile(fullPath);
         }
       } catch (err) {
-        console.error(`FS operation failed`);
+        console.error(`FS operation failed - file not readable`);
       }
 
       return {

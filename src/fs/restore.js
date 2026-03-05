@@ -7,15 +7,17 @@ const restore = async () => {
   try {
     const snapshotStat = await fs.stat(snapshotFile);
     if (!snapshotStat.isFile()) {
-      throw new Error(`FS operation failed`);
+      throw new Error(`FS operation failed - snapshot-json not found`);
     }
   } catch {
-    throw new Error(`FS operation failed`);
+    throw new Error(`FS operation failed - snapshot-json not found`);
   }
   try {
     const stat = await fs.stat(restoredFolder);
     if (stat.isDirectory()) {
-      throw new Error(`FS operation failed`);
+      throw new Error(
+        `FS operation failed - workspace_restored folder not found`,
+      );
     }
   } catch (err) {
     if (err.code !== "ENOENT") throw err;

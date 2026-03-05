@@ -13,14 +13,14 @@ async function merge() {
 
   if (filesIndex !== -1) {
     if (!args[filesIndex + 1]) {
-      throw new Error("FS operation failed");
+      throw new Error("FS operation failed - argument files not found");
     }
     files = args[filesIndex + 1].split(",");
   } else {
     const entries = await fs.readdir(partsDir, { recursive: true });
     files = entries.filter((f) => path.extname(f) === ".txt").sort();
     if (files.length === 0) {
-      throw new Error("FS operation failed");
+      throw new Error("FS operation failed - .txt files not found");
     }
   }
 
@@ -32,7 +32,7 @@ async function merge() {
       const text = await fs.readFile(fullPath, "utf-8");
       content += text;
     } catch {
-      throw new Error("FS operation failed");
+      throw new Error("FS operation failed - error in reading a file");
     }
   }
   await fs.writeFile(outputFile, content);
